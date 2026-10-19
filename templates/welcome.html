@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}En orden — tus tareas, en calma{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <span class="eyebrow"><span class="eyebrow-dot"></span> TU ESPACIO, A TU RITMO</span>
+    <h1>Menos ruido.<br><span>Más hecho.</span></h1>
+    <p class="hero-text">Un lugar sencillo para organizar lo importante, dar el siguiente paso y celebrar lo que ya terminaste.</p>
+    <div class="hero-actions">
+      <a class="button button-primary" href="{{ url_for('register') }}">Empieza gratis <span aria-hidden="true">→</span></a>
+      <a class="hero-login" href="{{ url_for('login') }}">Ya tengo una cuenta</a>
+    </div>
+    <div class="hero-note"><span class="note-check">✓</span> Tus tareas, siempre privadas</div>
+  </div>
+  <div class="hero-visual" aria-hidden="true">
+    <div class="visual-orbit orbit-one"></div>
+    <div class="visual-orbit orbit-two"></div>
+    <div class="visual-spark spark-one">✳</div><div class="visual-spark spark-two">✦</div>
+    <div class="preview-card">
+      <div class="preview-top"><div><span class="preview-label">MARTES, 19 OCT</span><h2>Un buen día<br>para avanzar.</h2></div><span class="preview-count">03<br><small>tareas</small></span></div>
+      <div class="preview-task done"><span class="preview-check">✓</span><span>Preparar el café</span><span class="preview-time">9:00</span></div>
+      <div class="preview-task"><span class="preview-empty"></span><span>Enviar propuesta</span><span class="preview-time">11:30</span></div>
+      <div class="preview-task"><span class="preview-empty"></span><span>Salir a caminar</span><span class="preview-time">17:00</span></div>
+      <div class="preview-bottom"><span class="preview-bar"><i></i></span><span>Un paso a la vez</span></div>
+    </div>
+    <div class="floating-note"><span class="floating-icon">✦</span><span>¡Vas muy bien!<small>Un pendiente menos</small></span></div>
+  </div>
+</section>
+<section class="feature-row">
+  <div class="feature"><span class="feature-icon icon-lilac">✎</span><div><strong>Simple por diseño</strong><p>Agrega y edita tareas sin complicaciones.</p></div></div>
+  <div class="feature"><span class="feature-icon icon-mint">✓</span><div><strong>Progreso visible</strong><p>Marca tus logros, grandes o pequeños.</p></div></div>
+  <div class="feature"><span class="feature-icon icon-peach">♡</span><div><strong>Solo para ti</strong><p>Tu espacio personal y privado.</p></div></div>
+</section>
+{% endblock %}

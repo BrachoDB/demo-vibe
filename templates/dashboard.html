@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Mis tareas — En orden{% endblock %}
+{% block content %}
+{% set completed_count = tasks|selectattr('completed')|list|length %}
+<section class="dashboard">
+  <div class="dashboard-heading">
+    <div><span class="eyebrow"><span class="eyebrow-dot"></span> TU ESPACIO PERSONAL</span><h1>Hola, {{ g.user.username }}<span class="heading-spark">✦</span></h1><p>Todo empieza con un pequeño paso.</p></div>
+    <div class="progress-card"><span class="progress-number">{{ completed_count }}<small>/ {{ tasks|length }}</small></span><span class="progress-caption">tareas completadas</span><span class="progress-track"><i style="width: {{ (completed_count * 100 / tasks|length) if tasks|length else 0 }}%"></i></span></div>
+  </div>
+  <div class="task-layout">
+    <section class="task-list-panel">
+      <div class="section-heading"><div><h2>Mis tareas</h2><span>{{ tasks|length }} {{ 'pendientes' if tasks|length != 1 else 'tarea en tu lista' }}</span></div><span class="section-mark">✳</span></div>
+      {% if tasks %}
+        <div class="task-list">
+          {% for task in tasks %}
+            <article class="task-card {{ 'task-completed' if task.completed }}">
+              <form action="{{ url_for('toggle_task', task_id=task.id) }}" method="post" class="toggle-form">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button class="task-check {{ 'checked' if task.completed }}" type="submit" aria-label="{{ 'Marcar como pendiente' if task.completed else 'Completar tarea' }}">{{ '✓' if task.completed else '' }}</button>
+              </form>
+              <div class="task-content"><h3>{{ task.title }}</h3>{% if task.description %}<p>{{ task.description }}</p>{% endif %}</div>
+              <div class="task-actions"><a class="action-link" href="{{ url_for('edit_task', task_id=task.id) }}" aria-label="Editar {{ task.title }}">Editar</a><form action="{{ url_for('delete_task', task_id=task.id) }}" method="post" onsubmit="return confirm('¿Eliminar esta tarea?')"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="action-link delete-link" type="submit">Eliminar</button></form></div>
+            </article>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="empty-state"><span class="empty-illustration">✳</span><h3>Tu lista empieza aquí</h3><p>Anota eso que tienes en mente. No hace falta hacerlo todo hoy.</p></div>
+      {% endif %}
+      <p class="gentle-reminder"><span>♡</span> Recuerda: avanzar también es ir despacio.</p>
+    </section>
+    <aside class="create-panel">
+      <span class="create-icon">＋</span><h2>Una cosa más</h2><p>Agrega un pendiente y sácalo de tu cabeza.</p>
+      <form action="{{ url_for('create_task') }}" method="post" class="form-stack task-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label for="title">¿Qué quieres hacer?</label><input id="title" name="title" type="text" maxlength="120" required placeholder="Escribe una tarea...">
+        <label for="description">Un detalle <span>(opcional)</span></label><textarea id="description" name="description" rows="3" maxlength="2000" placeholder="Agrega una nota si lo necesitas"></textarea>
+        <button class="button button-primary button-full" type="submit">Añadir a mi lista <span aria-hidden="true">→</span></button>
+      </form>
+      <div class="panel-footer"><span>✦</span> Un paso a la vez.</div>
+    </aside>
+  </div>
+</section>
+{% endblock %}

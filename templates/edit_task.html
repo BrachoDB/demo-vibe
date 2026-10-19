@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Editar tarea — En orden{% endblock %}
+{% block content %}
+<section class="edit-layout">
+  <a class="back-link" href="{{ url_for('index') }}">← Volver a mis tareas</a>
+  <div class="edit-card">
+    <span class="create-icon">✎</span><h1>Un pequeño ajuste</h1><p class="form-intro">Edita tu tarea y déjala como la necesitas.</p>
+    <form method="post" class="form-stack">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label for="title">Título</label><input id="title" name="title" type="text" maxlength="120" required value="{{ request.form.get('title', task.title) }}">
+      <label for="description">Descripción <span>(opcional)</span></label><textarea id="description" name="description" rows="5" maxlength="2000">{{ request.form.get('description', task.description) }}</textarea>
+      <div class="edit-actions"><button class="button button-primary" type="submit">Guardar cambios <span aria-hidden="true">→</span></button><a class="button button-quiet" href="{{ url_for('index') }}">Cancelar</a></div>
+    </form>
+  </div>
+</section>
+{% endblock %}

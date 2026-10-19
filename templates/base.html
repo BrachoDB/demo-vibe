@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8fc">
+  <title>{% block title %}En orden{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="{{ url_for('index') }}"><span class="brand-mark">e.</span><span>en orden</span></a>
+    {% if g.user %}
+      <nav class="top-nav">
+        <span class="welcome-user">Hola, {{ g.user.username }}</span>
+        <form action="{{ url_for('logout') }}" method="post">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="button button-quiet button-small" type="submit">Cerrar sesión</button>
+        </form>
+      </nav>
+    {% else %}
+      <nav class="top-nav">
+        <a class="nav-link" href="{{ url_for('login') }}">Iniciar sesión</a>
+        <a class="button button-small" href="{{ url_for('register') }}">Crear cuenta</a>
+      </nav>
+    {% endif %}
+  </header>
+
+  <main class="page-shell">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-stack" aria-live="polite">
+          {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="site-footer">Un paso a la vez. <span>Hecho para tus días.</span></footer>
+</body>
+</html>
