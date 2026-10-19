@@ -1,4 +1,4 @@
-# En orden
+# demo-vibe — En orden
 
 Aplicación web de tareas en español, hecha con Flask y SQLite. Cada cuenta tiene
 su propio espacio para crear, editar, completar y eliminar tareas.
